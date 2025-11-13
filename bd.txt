@@ -1,0 +1,43 @@
+CREATE DATABASE proyecto;
+USE proyecto;
+
+CREATE TABLE alumno (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  dni VARCHAR(8) NOT NULL,
+  nombre VARCHAR(255) NOT NULL,
+  direccion VARCHAR(255) NOT NULL,
+  edad INT NOT NULL,
+  email VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE profesor (
+  usuario VARCHAR(255) PRIMARY KEY,
+  pass VARCHAR(255) NOT NULL,
+  nombre VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE asignatura (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(255) NOT NULL,
+  creditos INT NOT NULL DEFAULT 0,
+  profesor VARCHAR(255),
+  FOREIGN KEY (profesor) REFERENCES profesor(usuario)
+);
+
+CREATE TABLE matricula (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  alumnoId INT NOT NULL,
+  asignaturaId INT NOT NULL,
+  FOREIGN KEY (alumnoId) REFERENCES alumno(id),
+  FOREIGN KEY (asignaturaId) REFERENCES asignatura(id)
+);
+
+CREATE TABLE calificacion (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  descripcion VARCHAR(255) NOT NULL,
+  nota DECIMAL(5,2) NOT NULL,
+  porcentaje INT NOT NULL,
+  matriculaId INT NOT NULL,
+  FOREIGN KEY (matriculaId) REFERENCES matricula(id)
+);
